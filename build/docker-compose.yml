@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  
+  postgres:
+    container_name: postgres
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/data
+    ports:
+      - 9000:9000
